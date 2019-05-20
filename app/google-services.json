@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "628681545527",
+    "firebase_url": "https://controleuniversitario-32d75.firebaseio.com",
+    "project_id": "controleuniversitario-32d75",
+    "storage_bucket": "controleuniversitario-32d75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628681545527:android:a5f06a74c4bcc6ff",
+        "android_client_info": {
+          "package_name": "br.ufop.controleuniversitario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628681545527-s5qda6trhsk2fqi66344scl0d7ieq5of.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.ufop.controleuniversitario",
+            "certificate_hash": "e31fe074c83146e7d3d23c100f4c50aaa64527cf"
+          }
+        },
+        {
+          "client_id": "628681545527-hsbtd8dhrf62oj3a7cjhtscod72lh3fp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEWozbMaeTRScyAMn2U8E8MDqNXozI3KA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628681545527-hsbtd8dhrf62oj3a7cjhtscod72lh3fp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

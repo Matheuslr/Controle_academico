@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome da disciplina :"
+            android:layout_margin="8dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/etNomeDisciplina"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="Disciplina"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Semestre referente a matéria: "
+            android:layout_margin="8dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/etSemestre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_margin="8dp"
+            />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Meta :"
+            android:layout_margin="8dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/etMeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="60.00"
+            android:gravity="center"
+            android:layout_margin="8dp"
+            />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nota atual :"
+            android:layout_margin="8dp"
+            android:gravity="center"/>
+        <EditText
+            android:id="@+id/etNotaAtual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:layout_margin="8dp"
+            />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Limite de faltas :"
+            android:layout_margin="8dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/etLimiteDeFaltas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="18"
+            android:gravity="center"
+            android:layout_margin="8dp"/>
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Numero de faltas atual :"
+            android:layout_margin="8dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/etNumeroFaltaAtual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="0"
+            android:gravity="center"
+            android:layout_margin="8dp"/>
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horario de aula :"
+            android:layout_margin="8dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/etHorarioAula"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="time"
+            android:hint="00:00"
+            android:gravity="center"
+            android:layout_margin="8dp"
+            />
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dia de aula :"
+            android:layout_margin="8dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/etDiaAula"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="dia da semana"
+            android:gravity="center"
+            android:layout_margin="8dp"
+            />
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome do professor:"
+            android:layout_margin="8dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/etProfessor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Joao"
+            android:gravity="center"
+            android:layout_margin="8dp"
+            />
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email do professor :"
+            android:layout_margin="8dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/etEmailProfessor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="joao@ufop.edu.com.br"
+            android:gravity="center"
+            android:layout_margin="8dp"
+            />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="A disciplina está em andamento?"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            />
+
+        <Switch
+            android:id="@+id/swAndamento"
+            android:layout_width="64dp"
+            android:layout_height="18dp"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:showText="false"
+            android:textOff="false"
+            android:textOn="true"
+            android:layout_gravity="center"
+            tools:checked="true" />
+
+        <Button
+            android:id="@+id/btCadastrarDisciplina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="36dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:onClick="cadastrarDisciplina"
+            android:text="Cadastrar disciplina" />
+
+
+
+
+    </LinearLayout>
+</ScrollView>
