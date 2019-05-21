@@ -16,12 +16,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class NovaDisciplina extends Activity {
+
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    private Intent it;
+    private Bundle extra;
+
     private EditText etNomeDisciplina;
     private EditText etSemestre;
     private EditText etLimiteDeFaltas;
     private EditText etNumeroFaltasAtual;
     private EditText etMeta;
+    private EditText etNotaAtual;
     private EditText etDiaAula;
     private EditText etHorarioAula;
     private EditText etProfessor;
@@ -33,6 +39,7 @@ public class NovaDisciplina extends Activity {
     private int semestre;
     private int limiteFaltas;
     private double meta;
+    private String notaAtual;
     private String diaAula;
     private String horarioAula;
     private String professor;
@@ -45,6 +52,7 @@ public class NovaDisciplina extends Activity {
     private boolean validacaoSemestre;
     private boolean validacaoLimiteDeFaltas;
     private boolean validacaoMeta;
+    private boolean validacaoNotaAtual;
     private boolean validacaoHorarioAula;
     private boolean validacaoDiaAula;
     private boolean validacaoProfessor;
@@ -61,12 +69,15 @@ public class NovaDisciplina extends Activity {
         etLimiteDeFaltas = findViewById(R.id.etLimiteDeFaltas);
         etNumeroFaltasAtual = findViewById(R.id.etNumeroFaltaAtual);
         etMeta = findViewById(R.id.etMeta);
+        etNotaAtual = findViewById(R.id.etNotaAtual);
         etDiaAula = findViewById(R.id.etDiaAula);
         etHorarioAula = findViewById(R.id.etHorarioAula);
         etProfessor = findViewById(R.id.etProfessor);
         etEmailProfessor = findViewById(R.id.etEmailProfessor);
         swAndamento = findViewById(R.id.swAndamento);
         tarefas = new ArrayList<Tarefa>();
+        it = getIntent();
+        extra=it.getExtras();
 
     }
 
@@ -77,6 +88,7 @@ public class NovaDisciplina extends Activity {
         validacaoSemestre = (Util.isEmpty(etSemestre));
         validacaoLimiteDeFaltas = (Util.isEmpty(etLimiteDeFaltas));
         validacaoMeta = (Util.isEmpty(etMeta));
+        validacaoNotaAtual = (Util.isEmpty(etNotaAtual));
         validacaoHorarioAula = (Util.isEmpty(etHorarioAula));
         validacaoDiaAula = (Util.isEmpty(etDiaAula));
         validacaoProfessor = (Util.isEmpty(etProfessor));
@@ -103,7 +115,7 @@ public class NovaDisciplina extends Activity {
             Toast.makeText(this, "A meta deve ser preenchida", Toast.LENGTH_LONG).show();
             etMeta.setText("");
             etMeta.requestFocus();
-        } else {
+        } else  {
 
             nomeDisciplina = etNomeDisciplina.getText().toString();
             semestre = Integer.parseInt(etSemestre.getText().toString());
@@ -162,6 +174,7 @@ public class NovaDisciplina extends Activity {
             } else {
 
                 disciplinaAdd.setEmailProfessor(null);
+
             }
 
             if (!validacaoNumeroFaltasAtual) {
@@ -170,37 +183,46 @@ public class NovaDisciplina extends Activity {
                 disciplinaAdd.setNumeroFaltasAtual(Integer.parseInt(numeroFaltasAtual));
 
             } else {
+
                 numeroFaltasAtual = String.valueOf(disciplinaAdd.getNumeroFaltasAtual());
+
+            }
+
+            if(!validacaoNotaAtual){
+
+                notaAtual = (etNotaAtual.getText().toString());
+                disciplinaAdd.setNotaAtual(Double.parseDouble(notaAtual));
+            } else {
+                notaAtual = String.valueOf(disciplinaAdd.getNotaAtual());
             }
 
 
-            aluno = "Matheus";
+            aluno = extra.getString("user");
             Log.d("novaDisciplina", disciplinaAdd.toString());
 
+            final DatabaseReference Alunos_aluno_disciplinaNomeRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/nomeDisciplina");
+            final DatabaseReference Alunos_aluno_disciplinas_andamentoRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/andamento");
+            final DatabaseReference Alunos_aluno_disciplinas_diasAulaRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/diasAula");
+            final DatabaseReference Alunos_aluno_disciplinas_emailProfessorRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/emailProfessor");
+            final DatabaseReference Alunos_aluno_disciplinas_horarioAulaRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/horarioAula");
+            final DatabaseReference Alunos_aluno_disciplinas_limiteFaltaRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/limiteFalta");
+            final DatabaseReference Alunos_aluno_disciplinas_metaRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/meta");
+            final DatabaseReference Alunos_aluno_disciplinas_notaAtualRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/notaAtual");
+            final DatabaseReference Alunos_aluno_disciplinas_numeroFaltaAtualRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/numeroFaltaAtual");
+            final DatabaseReference Alunos_aluno_disciplinas_professorRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/professor");
+            final DatabaseReference Alunos_aluno_disciplinas_semestreRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/semestre");
 
-//            final DatabaseReference alunoRef = database.getReference(aluno);
-            final DatabaseReference aluno_disciplinaNomeRef = database.getReference(aluno + "/" + nomeDisciplina + "/nomeDisciplina");
-            final DatabaseReference aluno_disciplinas_andamentoRef = database.getReference(aluno + "/" + nomeDisciplina + "/andamento");
-            final DatabaseReference aluno_disciplinas_diasAulaRef = database.getReference(aluno + "/" + nomeDisciplina + "/diasAula");
-            final DatabaseReference aluno_disciplinas_emailProfessorRef = database.getReference(aluno + "/" + nomeDisciplina + "/emailProfessor");
-            final DatabaseReference aluno_disciplinas_horarioAulaRef = database.getReference(aluno + "/" + nomeDisciplina + "/horarioAula");
-            final DatabaseReference aluno_disciplinas_limiteFaltaRef = database.getReference(aluno + "/" + nomeDisciplina + "/limiteFalta");
-            final DatabaseReference aluno_disciplinas_metaRef = database.getReference(aluno + "/" + nomeDisciplina + "/meta");
-            final DatabaseReference aluno_disciplinas_numeroFaltaAtualRef = database.getReference(aluno + "/" + nomeDisciplina + "/numeroFaltaAtual");
-            final DatabaseReference aluno_disciplinas_professorRef = database.getReference(aluno + "/" + nomeDisciplina + "/professor");
-            final DatabaseReference aluno_disciplinas_semestreRef = database.getReference(aluno + "/" + nomeDisciplina + "/semestre");
-
-//            alunoRef.setValue(aluno);
-            aluno_disciplinaNomeRef.setValue(nomeDisciplina);
-            aluno_disciplinas_andamentoRef.setValue(andamento);
-            aluno_disciplinas_diasAulaRef.setValue(diaAula);
-            aluno_disciplinas_emailProfessorRef.setValue(emailProfessor);
-            aluno_disciplinas_horarioAulaRef.setValue(horarioAula);
-            aluno_disciplinas_limiteFaltaRef.setValue(limiteFaltas);
-            aluno_disciplinas_metaRef.setValue(meta);
-            aluno_disciplinas_numeroFaltaAtualRef.setValue(numeroFaltasAtual);
-            aluno_disciplinas_professorRef.setValue(professor);
-            aluno_disciplinas_semestreRef.setValue(semestre);
+            Alunos_aluno_disciplinaNomeRef.setValue(nomeDisciplina);
+            Alunos_aluno_disciplinas_andamentoRef.setValue(andamento);
+            Alunos_aluno_disciplinas_diasAulaRef.setValue(diaAula);
+            Alunos_aluno_disciplinas_emailProfessorRef.setValue(emailProfessor);
+            Alunos_aluno_disciplinas_horarioAulaRef.setValue(horarioAula);
+            Alunos_aluno_disciplinas_limiteFaltaRef.setValue(limiteFaltas);
+            Alunos_aluno_disciplinas_metaRef.setValue(meta);
+            Alunos_aluno_disciplinas_notaAtualRef.setValue(notaAtual);
+            Alunos_aluno_disciplinas_numeroFaltaAtualRef.setValue(numeroFaltasAtual);
+            Alunos_aluno_disciplinas_professorRef.setValue(professor);
+            Alunos_aluno_disciplinas_semestreRef.setValue(semestre);
             Toast.makeText(this, "Disciplina adicionada com sucesso! ", Toast.LENGTH_LONG).show();
 
             etNomeDisciplina.setText("");
@@ -208,6 +230,7 @@ public class NovaDisciplina extends Activity {
             etLimiteDeFaltas.setText("");
             etNumeroFaltasAtual.setText("");
             etMeta.setText("");
+            etNotaAtual.setText("");
             etDiaAula.setText("");
             etHorarioAula.setText("");
             etProfessor.setText("");

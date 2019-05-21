@@ -1,5 +1,6 @@
 package br.ufop.controleuniversitario;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.EditText;
 

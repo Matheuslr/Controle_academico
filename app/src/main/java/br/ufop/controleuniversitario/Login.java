@@ -37,14 +37,16 @@ public class Login extends Activity {
         validarUser = Util.isEmpty(etUser);
 
         if(!validarUser){
-            Toast.makeText(this, "Usuário precisa ser preenchido", Toast.LENGTH_LONG).show();
-
-        }else{
+            
             user = etUser.getText().toString();
             database = FirebaseDatabase.getInstance();
             Intent it = new Intent(Login.this, MainActivity.class);
             it.putExtra("user", user);
             startActivity(it);
+
+        }else{
+
+            Toast.makeText(this, "Usuário precisa ser preenchido", Toast.LENGTH_LONG).show();
 
         }
 
