@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="array_semestre">
+    <item>Primeiro</item>
+    <item>Segundo</item>
+    <item>Terceiro</item>
+    <item>Quarto</item>
+    <item>Quinto</item>
+    <item>Sexto</item>
+    <item>Sétimo</item>
+    <item>Oitavo</item>
+    <item>Nono</item>
+    <item>Décimo</item>
+    <item>Décimo-primeiro</item>
+    <item>Décimo-segundo</item>
+</string-array>
+</resources>

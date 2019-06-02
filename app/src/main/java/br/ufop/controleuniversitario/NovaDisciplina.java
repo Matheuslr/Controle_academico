@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -23,7 +25,6 @@ public class NovaDisciplina extends Activity {
     private Bundle extra;
 
     private EditText etNomeDisciplina;
-    private EditText etSemestre;
     private EditText etLimiteDeFaltas;
     private EditText etNumeroFaltasAtual;
     private EditText etMeta;
@@ -33,10 +34,11 @@ public class NovaDisciplina extends Activity {
     private EditText etProfessor;
     private EditText etEmailProfessor;
     private ArrayList<Tarefa> tarefas;
+    private Spinner spinnerSemestre;
     private Switch swAndamento;
 
     private String nomeDisciplina;
-    private int semestre;
+    private String semestre;
     private int limiteFaltas;
     private double meta;
     private String notaAtual;
@@ -58,14 +60,20 @@ public class NovaDisciplina extends Activity {
     private boolean validacaoProfessor;
     private boolean validacaoEmailProfessor;
     private boolean validacaoNumeroFaltasAtual;
+    private String[] values = new String[]{"Primeiro", "Segundo", "Terceiro"};
 
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.nova_disciplina);
+        spinnerSemestre =  findViewById(R.id.spinnerSemestre);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.array_semestre, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSemestre.setAdapter(adapter);
         etNomeDisciplina = findViewById(R.id.etNomeDisciplina);
-        etSemestre = findViewById(R.id.etSemestre);
+        spinnerSemestre = (Spinner) findViewById(R.id.spinnerSemestre);
         etLimiteDeFaltas = findViewById(R.id.etLimiteDeFaltas);
         etNumeroFaltasAtual = findViewById(R.id.etNumeroFaltaAtual);
         etMeta = findViewById(R.id.etMeta);
@@ -85,7 +93,6 @@ public class NovaDisciplina extends Activity {
 
 
         validacaoNome = (Util.isEmpty(etNomeDisciplina));
-        validacaoSemestre = (Util.isEmpty(etSemestre));
         validacaoLimiteDeFaltas = (Util.isEmpty(etLimiteDeFaltas));
         validacaoMeta = (Util.isEmpty(etMeta));
         validacaoNotaAtual = (Util.isEmpty(etNotaAtual));
@@ -102,9 +109,9 @@ public class NovaDisciplina extends Activity {
             etNomeDisciplina.requestFocus();
 
         } else if (validacaoSemestre) {
-            Toast.makeText(this, "O semestre deve ser preenchido", Toast.LENGTH_LONG).show();
-            etSemestre.setText("");
-            etSemestre.requestFocus();
+//            Toast.makeText(this, "O semestre deve ser preenchido", Toast.LENGTH_LONG).show();
+//            etSemestre.setText("");
+//            etSemestre.requestFocus();
 
         } else if (validacaoLimiteDeFaltas) {
             Toast.makeText(this, "O número limite de faltas deve ser preenchido", Toast.LENGTH_LONG).show();
@@ -118,7 +125,7 @@ public class NovaDisciplina extends Activity {
         } else  {
 
             nomeDisciplina = etNomeDisciplina.getText().toString();
-            semestre = Integer.parseInt(etSemestre.getText().toString());
+//            semestre = Integer.parseInt(etSemestre.getText().toString());
             limiteFaltas = Integer.parseInt(etLimiteDeFaltas.getText().toString());
             meta = Float.parseFloat(etMeta.getText().toString());
 
@@ -132,7 +139,7 @@ public class NovaDisciplina extends Activity {
                 andamento = false;
 
             }
-
+            semestre = "1";
             Disciplina disciplinaAdd = new Disciplina(nomeDisciplina, semestre, limiteFaltas, meta, andamento, tarefas);
 
 
@@ -226,7 +233,7 @@ public class NovaDisciplina extends Activity {
             Toast.makeText(this, "Disciplina adicionada com sucesso! ", Toast.LENGTH_LONG).show();
 
             etNomeDisciplina.setText("");
-            etSemestre.setText("");
+//            etSemestre.setText("");
             etLimiteDeFaltas.setText("");
             etNumeroFaltasAtual.setText("");
             etMeta.setText("");

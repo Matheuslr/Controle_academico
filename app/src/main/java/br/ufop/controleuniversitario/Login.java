@@ -37,7 +37,6 @@ public class Login extends Activity {
         validarUser = Util.isEmpty(etUser);
 
         if(!validarUser){
-            
             user = etUser.getText().toString();
             database = FirebaseDatabase.getInstance();
             Intent it = new Intent(Login.this, MainActivity.class);

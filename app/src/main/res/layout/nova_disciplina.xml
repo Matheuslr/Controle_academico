@@ -37,12 +37,13 @@
             android:layout_margin="8dp"
             android:gravity="center"/>
 
-        <EditText
-            android:id="@+id/etSemestre"
+        <Spinner
+            android:id="@+id/spinnerSemestre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:layout_margin="8dp"
+            android:gravity="center"
+            android:layout_gravity="center"
             />
 
         <TextView

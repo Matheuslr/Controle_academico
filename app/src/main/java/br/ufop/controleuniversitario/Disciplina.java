@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Disciplina {
     //Atributos
     private String nomeDisciplina;
-    private int semestre;
+    private String semestre;
     private int numeroFaltasAtual;
     private int limiteFaltas;
     private double metaNota;
@@ -26,7 +26,7 @@ public class Disciplina {
     }
 
 
-    public Disciplina(String nomeDisciplina, int semestre, int limiteFaltas, double metaNota, boolean andamento, ArrayList<Tarefa> tarefa) {
+    public Disciplina(String nomeDisciplina, String semestre, int limiteFaltas, double metaNota, boolean andamento, ArrayList<Tarefa> tarefa) {
         this.nomeDisciplina = nomeDisciplina;
         this.semestre = semestre;
         this.numeroFaltasAtual = 0;
@@ -41,7 +41,7 @@ public class Disciplina {
         this.tarefa = tarefa;
     }
 
-    public Disciplina(String nomeDisciplina, int semestre, int numeroFaltasAtual, int limiteFaltas, double metaNota, boolean andamento, double notaAtual, ArrayList<Tarefa> tarefa, String diasDeAula, String horarioAula, String professor, String emailProfessor) {
+    public Disciplina(String nomeDisciplina, String semestre, int numeroFaltasAtual, int limiteFaltas, double metaNota, boolean andamento, double notaAtual, ArrayList<Tarefa> tarefa, String diasDeAula, String horarioAula, String professor, String emailProfessor) {
         this.nomeDisciplina = nomeDisciplina;
         this.semestre = semestre;
         this.numeroFaltasAtual = numeroFaltasAtual;
@@ -61,9 +61,9 @@ public class Disciplina {
 
     public void setNomeDisciplina(String nomeDisciplina) { this.nomeDisciplina = nomeDisciplina; }
 
-    public int getSemestre() { return semestre; }
+    public String getSemestre() { return semestre; }
 
-    public void setSemestre(int semestre) {
+    public void setSemestre(String semestre) {
         this.semestre = semestre;
     }
 
