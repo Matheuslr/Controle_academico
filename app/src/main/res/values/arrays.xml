@@ -15,4 +15,16 @@
     <item>Décimo-primeiro</item>
     <item>Décimo-segundo</item>
 </string-array>
+
+    <string-array
+        name="array_dias_semana">
+        <item>Segunda</item>
+        <item>Terça</item>
+        <item>Quarta</item>
+        <item>Quinta</item>
+        <item>Sexta</item>
+        <item>Sábado</item>
+
+    </string-array>
+
 </resources>

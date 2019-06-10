@@ -1,8 +1,12 @@
 package br.ufop.controleuniversitario;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -10,16 +14,24 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
-public class NovaDisciplina extends Activity {
+public class NovaDisciplina extends AppCompatActivity {
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    private TimePickerDialog dialogTimePicker;
 
     private Intent it;
     private Bundle extra;
@@ -29,11 +41,12 @@ public class NovaDisciplina extends Activity {
     private EditText etNumeroFaltasAtual;
     private EditText etMeta;
     private EditText etNotaAtual;
-    private EditText etDiaAula;
+
     private EditText etHorarioAula;
     private EditText etProfessor;
     private EditText etEmailProfessor;
     private ArrayList<Tarefa> tarefas;
+    private Spinner spinnerDiaSemana;
     private Spinner spinnerSemestre;
     private Switch swAndamento;
 
@@ -42,7 +55,7 @@ public class NovaDisciplina extends Activity {
     private int limiteFaltas;
     private double meta;
     private String notaAtual;
-    private String diaAula;
+    private String diaSemana;
     private String horarioAula;
     private String professor;
     private String emailProfessor;
@@ -51,35 +64,58 @@ public class NovaDisciplina extends Activity {
 
     private boolean andamento;
     private boolean validacaoNome;
-    private boolean validacaoSemestre;
     private boolean validacaoLimiteDeFaltas;
     private boolean validacaoMeta;
     private boolean validacaoNotaAtual;
     private boolean validacaoHorarioAula;
-    private boolean validacaoDiaAula;
     private boolean validacaoProfessor;
     private boolean validacaoEmailProfessor;
     private boolean validacaoNumeroFaltasAtual;
-    private String[] values = new String[]{"Primeiro", "Segundo", "Terceiro"};
+    private DateFormat dateFormatTime;
+    private Calendar calendar;
+
+
 
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.nova_disciplina);
+        setTitle("Adicionar Disciplina");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         spinnerSemestre =  findViewById(R.id.spinnerSemestre);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.array_semestre, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSemestre.setAdapter(adapter);
         etNomeDisciplina = findViewById(R.id.etNomeDisciplina);
-        spinnerSemestre = (Spinner) findViewById(R.id.spinnerSemestre);
         etLimiteDeFaltas = findViewById(R.id.etLimiteDeFaltas);
         etNumeroFaltasAtual = findViewById(R.id.etNumeroFaltaAtual);
         etMeta = findViewById(R.id.etMeta);
         etNotaAtual = findViewById(R.id.etNotaAtual);
-        etDiaAula = findViewById(R.id.etDiaAula);
+        spinnerDiaSemana = findViewById(R.id.spinnerDiaSemana);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
+                R.array.array_dias_semana, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDiaSemana.setAdapter(adapter2);
         etHorarioAula = findViewById(R.id.etHorarioAula);
+        calendar = new GregorianCalendar();
+        calendar.setTimeZone(TimeZone.getDefault());
+        dateFormatTime = DateFormat.getDateTimeInstance();
+        etHorarioAula.setText(dateFormatTime.format(calendar.getTime()));
+        dialogTimePicker = new TimePickerDialog(this,
+            AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
+                etHorarioAula.setText(dateFormatTime.format(calendar.getTime()));
+            }
+        },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true);
         etProfessor = findViewById(R.id.etProfessor);
         etEmailProfessor = findViewById(R.id.etEmailProfessor);
         swAndamento = findViewById(R.id.swAndamento);
@@ -97,7 +133,6 @@ public class NovaDisciplina extends Activity {
         validacaoMeta = (Util.isEmpty(etMeta));
         validacaoNotaAtual = (Util.isEmpty(etNotaAtual));
         validacaoHorarioAula = (Util.isEmpty(etHorarioAula));
-        validacaoDiaAula = (Util.isEmpty(etDiaAula));
         validacaoProfessor = (Util.isEmpty(etProfessor));
         validacaoEmailProfessor = (Util.isEmpty(etEmailProfessor));
         validacaoNumeroFaltasAtual = (Util.isEmpty(etNumeroFaltasAtual));
@@ -107,11 +142,6 @@ public class NovaDisciplina extends Activity {
             Toast.makeText(this, "O nome deve ser preenchido", Toast.LENGTH_LONG).show();
             etNomeDisciplina.setText("");
             etNomeDisciplina.requestFocus();
-
-        } else if (validacaoSemestre) {
-//            Toast.makeText(this, "O semestre deve ser preenchido", Toast.LENGTH_LONG).show();
-//            etSemestre.setText("");
-//            etSemestre.requestFocus();
 
         } else if (validacaoLimiteDeFaltas) {
             Toast.makeText(this, "O número limite de faltas deve ser preenchido", Toast.LENGTH_LONG).show();
@@ -125,33 +155,16 @@ public class NovaDisciplina extends Activity {
         } else  {
 
             nomeDisciplina = etNomeDisciplina.getText().toString();
-//            semestre = Integer.parseInt(etSemestre.getText().toString());
             limiteFaltas = Integer.parseInt(etLimiteDeFaltas.getText().toString());
             meta = Float.parseFloat(etMeta.getText().toString());
 
 
-            if (swAndamento.isChecked()) {
-
-                andamento = true;
-
-            } else {
-
-                andamento = false;
-
-            }
-            semestre = "1";
+            andamento = swAndamento.isChecked();
+            semestre = spinnerSemestre.getSelectedItem().toString();
+            diaSemana = spinnerDiaSemana.getSelectedItem().toString();
             Disciplina disciplinaAdd = new Disciplina(nomeDisciplina, semestre, limiteFaltas, meta, andamento, tarefas);
 
 
-            if (!validacaoDiaAula) {
-
-                diaAula = etDiaAula.getText().toString();
-                disciplinaAdd.setDiasDeAula(diaAula);
-
-            } else {
-
-                disciplinaAdd.setDiasDeAula(null);
-            }
 
             if (!validacaoHorarioAula) {
 
@@ -202,8 +215,7 @@ public class NovaDisciplina extends Activity {
             } else {
                 notaAtual = String.valueOf(disciplinaAdd.getNotaAtual());
             }
-
-
+            disciplinaAdd.setDiaSemana(diaSemana);
             aluno = extra.getString("user");
             Log.d("novaDisciplina", disciplinaAdd.toString());
 
@@ -221,7 +233,7 @@ public class NovaDisciplina extends Activity {
 
             Alunos_aluno_disciplinaNomeRef.setValue(nomeDisciplina);
             Alunos_aluno_disciplinas_andamentoRef.setValue(andamento);
-            Alunos_aluno_disciplinas_diasAulaRef.setValue(diaAula);
+            Alunos_aluno_disciplinas_diasAulaRef.setValue(diaSemana);
             Alunos_aluno_disciplinas_emailProfessorRef.setValue(emailProfessor);
             Alunos_aluno_disciplinas_horarioAulaRef.setValue(horarioAula);
             Alunos_aluno_disciplinas_limiteFaltaRef.setValue(limiteFaltas);
@@ -233,12 +245,12 @@ public class NovaDisciplina extends Activity {
             Toast.makeText(this, "Disciplina adicionada com sucesso! ", Toast.LENGTH_LONG).show();
 
             etNomeDisciplina.setText("");
-//            etSemestre.setText("");
+            spinnerSemestre.setTag(1);
+            spinnerDiaSemana.setTag(1);
             etLimiteDeFaltas.setText("");
             etNumeroFaltasAtual.setText("");
             etMeta.setText("");
             etNotaAtual.setText("");
-            etDiaAula.setText("");
             etHorarioAula.setText("");
             etProfessor.setText("");
             etEmailProfessor.setText("");
@@ -246,8 +258,18 @@ public class NovaDisciplina extends Activity {
             etNomeDisciplina.requestFocus();
         }
 
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return super.onSupportNavigateUp();
 
     }
 
-
+    public void showTimePicker(View view) {
+        dialogTimePicker.show();
+    }
 }
+
+
+

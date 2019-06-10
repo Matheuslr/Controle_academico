@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="Nome da disciplina :"
             android:layout_margin="8dp"
-            android:gravity="center"/>
+            />
 
         <EditText
             android:id="@+id/etNomeDisciplina"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:hint="Disciplina"
-            android:gravity="center"/>
+            />
 
         <TextView
             android:id="@+id/textView6"
@@ -35,14 +35,14 @@
             android:layout_height="wrap_content"
             android:text="Semestre referente a matéria: "
             android:layout_margin="8dp"
-            android:gravity="center"/>
+            />
 
         <Spinner
             android:id="@+id/spinnerSemestre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:gravity="center"
+            
             android:layout_gravity="center"
             />
 
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:text="Meta :"
             android:layout_margin="8dp"
-            android:gravity="center"/>
+            />
 
         <EditText
             android:id="@+id/etMeta"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:hint="60.00"
-            android:gravity="center"
+            
             android:layout_margin="8dp"
             />
 
@@ -70,13 +70,13 @@
             android:layout_height="wrap_content"
             android:text="Nota atual :"
             android:layout_margin="8dp"
-            android:gravity="center"/>
+            />
         <EditText
             android:id="@+id/etNotaAtual"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="0"
-            android:gravity="center"
+            
             android:inputType="numberDecimal"
             android:layout_margin="8dp"
             />
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:text="Limite de faltas :"
             android:layout_margin="8dp"
-            android:gravity="center"/>
+            />
 
         <EditText
             android:id="@+id/etLimiteDeFaltas"
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:hint="18"
-            android:gravity="center"
+            
             android:layout_margin="8dp"/>
 
         <TextView
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:text="Numero de faltas atual :"
             android:layout_margin="8dp"
-            android:gravity="center"/>
+            />
 
         <EditText
             android:id="@+id/etNumeroFaltaAtual"
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:hint="0"
-            android:gravity="center"
+            
             android:layout_margin="8dp"/>
         <TextView
             android:id="@+id/textView10"
@@ -120,15 +120,16 @@
             android:layout_height="wrap_content"
             android:text="Horario de aula :"
             android:layout_margin="8dp"
-            android:gravity="center"/>
+            />
 
         <EditText
             android:id="@+id/etHorarioAula"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="time"
-            android:hint="00:00"
-            android:gravity="center"
+            android:focusable="false"
+            android:onClick="showTimePicker"
+            android:text="00:00"
+            
             android:layout_margin="8dp"
             />
         <TextView
@@ -137,16 +138,14 @@
             android:layout_height="wrap_content"
             android:text="Dia de aula :"
             android:layout_margin="8dp"
-            android:gravity="center"/>
+            />
 
-        <EditText
-            android:id="@+id/etDiaAula"
+        <Spinner
+            android:id="@+id/spinnerDiaSemana"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="dia da semana"
-            android:gravity="center"
             android:layout_margin="8dp"
+            android:layout_gravity="center"
             />
         <TextView
             android:id="@+id/textView12"
@@ -154,7 +153,7 @@
             android:layout_height="wrap_content"
             android:text="Nome do professor:"
             android:layout_margin="8dp"
-            android:gravity="center"/>
+            />
 
         <EditText
             android:id="@+id/etProfessor"
@@ -162,7 +161,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="Joao"
-            android:gravity="center"
+            
             android:layout_margin="8dp"
             />
         <TextView
@@ -171,7 +170,7 @@
             android:layout_height="wrap_content"
             android:text="Email do professor :"
             android:layout_margin="8dp"
-            android:gravity="center"/>
+            />
 
         <EditText
             android:id="@+id/etEmailProfessor"
@@ -179,7 +178,7 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:hint="joao@ufop.edu.com.br"
-            android:gravity="center"
+            
             android:layout_margin="8dp"
             />
 
@@ -190,7 +189,7 @@
             android:layout_marginTop="8dp"
             android:text="A disciplina está em andamento?"
             android:layout_margin="8dp"
-            android:gravity="center"
+            
             />
 
         <Switch
@@ -198,7 +197,7 @@
             android:layout_width="64dp"
             android:layout_height="18dp"
             android:layout_margin="8dp"
-            android:gravity="center"
+            
             android:showText="false"
             android:textOff="false"
             android:textOn="true"
@@ -214,7 +213,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="36dp"
-            android:gravity="center"
+            
             android:layout_gravity="center"
             android:onClick="cadastrarDisciplina"
             android:text="Cadastrar disciplina" />

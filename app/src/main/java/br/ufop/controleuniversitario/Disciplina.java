@@ -16,7 +16,7 @@ public class Disciplina {
     private ArrayList<Tarefa> tarefa;
     //Atributos Opcionais
 
-    private String diasDeAula;
+    private String diaSemana;
     private String horarioAula;
     private String professor;
     private String emailProfessor;
@@ -33,7 +33,7 @@ public class Disciplina {
         this.limiteFaltas = limiteFaltas;
         this.metaNota = metaNota;
         this.andamento = andamento;
-        this.diasDeAula = null;
+        this.diaSemana = null;
         this.horarioAula = null;
         this.professor = null;
         this.emailProfessor = null;
@@ -41,7 +41,7 @@ public class Disciplina {
         this.tarefa = tarefa;
     }
 
-    public Disciplina(String nomeDisciplina, String semestre, int numeroFaltasAtual, int limiteFaltas, double metaNota, boolean andamento, double notaAtual, ArrayList<Tarefa> tarefa, String diasDeAula, String horarioAula, String professor, String emailProfessor) {
+    public Disciplina(String nomeDisciplina, String semestre, int numeroFaltasAtual, int limiteFaltas, double metaNota, boolean andamento, double notaAtual, ArrayList<Tarefa> tarefa, String diaSemana, String horarioAula, String professor, String emailProfessor) {
         this.nomeDisciplina = nomeDisciplina;
         this.semestre = semestre;
         this.numeroFaltasAtual = numeroFaltasAtual;
@@ -50,7 +50,7 @@ public class Disciplina {
         this.andamento = andamento;
         this.notaAtual = notaAtual;
         this.tarefa = tarefa;
-        this.diasDeAula = diasDeAula;
+        this.diaSemana = diaSemana;
         this.horarioAula = horarioAula;
         this.professor = professor;
         this.emailProfessor = emailProfessor;
@@ -99,12 +99,12 @@ public class Disciplina {
         this.andamento = andamento;
     }
 
-    public String getDiasDeAula() {
-        return diasDeAula;
+    public String getDiaSemana() {
+        return diaSemana;
     }
 
-    public void setDiasDeAula(String diasDeAula) {
-        this.diasDeAula = diasDeAula;
+    public void setDiaSemana(String diaSemana) {
+        this.diaSemana = diaSemana;
     }
 
     public String getHorarioAula() {
@@ -190,7 +190,7 @@ public class Disciplina {
                 "\nLimite de faltas = " + this.getLimiteFaltas() +
                 "\nMeta = " + this.getMetaNota()+
                 "\nAndamento = " + this.isAndamento() +
-                "\nDias de aula = " + this.getDiasDeAula() +
+                "\nDias de aula = " + this.getDiaSemana() +
                 "\nHorário de aula = " + this.getHorarioAula() +
                 "\nProfessor = " + this.getProfessor() +
                 "\nEmail do Profesor = " + this.getEmailProfessor() +

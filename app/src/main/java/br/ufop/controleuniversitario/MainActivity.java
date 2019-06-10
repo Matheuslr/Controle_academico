@@ -13,6 +13,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Menu");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         it = getIntent();
         extra = it.getExtras();
 
@@ -25,6 +28,19 @@ public class MainActivity extends AppCompatActivity {
         Intent it = new Intent(MainActivity.this, NovaDisciplina.class);
         it.putExtra("user", user);
         startActivity(it);
+
+    }
+
+    public void editarDisciplina(View view) {
+        user = extra.getString("user");
+        Intent it = new Intent(MainActivity.this, EditarDisciplina.class);
+        it.putExtra("user", user);
+        startActivity(it);
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return super.onSupportNavigateUp();
 
     }
 }
