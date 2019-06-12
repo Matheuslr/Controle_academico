@@ -3,6 +3,7 @@ package br.ufop.controleuniversitario;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,13 +19,17 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         it = getIntent();
         extra = it.getExtras();
+        user = extra.getString("user");
+        Log.e("MainActivity", user);
 
 
     }
 
+
+
     public void adicionarDisciplina(View view) {
 
-        user = extra.getString("user");
+
         Intent it = new Intent(MainActivity.this, NovaDisciplina.class);
         it.putExtra("user", user);
         startActivity(it);
@@ -33,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void editarDisciplina(View view) {
         user = extra.getString("user");
-        Intent it = new Intent(MainActivity.this, EditarDisciplina.class);
+        Intent it = new Intent(MainActivity.this, ListarDisciplina.class);
         it.putExtra("user", user);
         startActivity(it);
     }
@@ -43,4 +48,5 @@ public class MainActivity extends AppCompatActivity {
         return super.onSupportNavigateUp();
 
     }
+
 }

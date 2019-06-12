@@ -1,5 +1,6 @@
 package br.ufop.controleuniversitario;
 
+import android.content.Intent;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -8,11 +9,11 @@ public class Disciplina {
     //Atributos
     private String nomeDisciplina;
     private String semestre;
-    private int numeroFaltasAtual;
-    private int limiteFaltas;
-    private double metaNota;
-    private boolean andamento;
-    private double notaAtual;
+    private Integer numeroFaltasAtual;
+    private Integer limiteFaltas;
+    private Double metaNota;
+    private Boolean andamento;
+    private Double notaAtual;
     private ArrayList<Tarefa> tarefa;
     //Atributos Opcionais
 
@@ -26,7 +27,7 @@ public class Disciplina {
     }
 
 
-    public Disciplina(String nomeDisciplina, String semestre, int limiteFaltas, double metaNota, boolean andamento, ArrayList<Tarefa> tarefa) {
+    public Disciplina(String nomeDisciplina, String semestre, Integer limiteFaltas, Double metaNota, Boolean andamento, ArrayList<Tarefa> tarefa) {
         this.nomeDisciplina = nomeDisciplina;
         this.semestre = semestre;
         this.numeroFaltasAtual = 0;
@@ -37,11 +38,11 @@ public class Disciplina {
         this.horarioAula = null;
         this.professor = null;
         this.emailProfessor = null;
-        this.notaAtual = 0;
+        this.notaAtual = 0.0;
         this.tarefa = tarefa;
     }
 
-    public Disciplina(String nomeDisciplina, String semestre, int numeroFaltasAtual, int limiteFaltas, double metaNota, boolean andamento, double notaAtual, ArrayList<Tarefa> tarefa, String diaSemana, String horarioAula, String professor, String emailProfessor) {
+    public Disciplina(String nomeDisciplina, String semestre, Integer numeroFaltasAtual, Integer limiteFaltas, Double metaNota, Boolean andamento, Double notaAtual, ArrayList<Tarefa> tarefa, String diaSemana, String horarioAula, String professor, String emailProfessor) {
         this.nomeDisciplina = nomeDisciplina;
         this.semestre = semestre;
         this.numeroFaltasAtual = numeroFaltasAtual;
@@ -67,35 +68,35 @@ public class Disciplina {
         this.semestre = semestre;
     }
 
-    public int getNumeroFaltasAtual() {
+    public Integer getNumeroFaltasAtual() {
         return numeroFaltasAtual;
     }
 
-    public void setNumeroFaltasAtual(int numeroFaltas) {
+    public void setNumeroFaltasAtual(Integer numeroFaltas) {
         this.numeroFaltasAtual = numeroFaltas;
     }
 
-    public int getLimiteFaltas() {
+    public Integer getLimiteFaltas() {
         return limiteFaltas;
     }
 
-    public void setLimiteFaltas(int limiteFaltas) {
+    public void setLimiteFaltas(Integer limiteFaltas) {
         this.limiteFaltas = limiteFaltas;
     }
 
-    public double getMetaNota() {
+    public Double getMetaNota() {
         return metaNota;
     }
 
-    public void setMetaNota(double metaNota) {
+    public void setMetaNota(Double metaNota) {
         this.metaNota = metaNota;
     }
 
-    public boolean isAndamento() {
+    public Boolean isAndamento() {
         return andamento;
     }
 
-    public void setAndamento(boolean andamento) {
+    public void setAndamento(Boolean andamento) {
         this.andamento = andamento;
     }
 
@@ -139,7 +140,7 @@ public class Disciplina {
         this.tarefa = tarefa;
     }
 
-    public double getNotaAtual() {
+    public Double getNotaAtual() {
         return notaAtual;
     }
 
@@ -182,6 +183,12 @@ public class Disciplina {
 
     }
 
+    public Boolean aprovado(){
+        return notaAtual > 60 && numeroFaltasAtual > limiteFaltas;
+    }
+
+
+
     @Override
     public String toString() {
         return ("\nnome = "  + this.getNomeDisciplina() +
@@ -195,6 +202,6 @@ public class Disciplina {
                 "\nProfessor = " + this.getProfessor() +
                 "\nEmail do Profesor = " + this.getEmailProfessor() +
                 "\nNumero nota atual = " + this.getNotaAtual() +
-                "\nTarefas = " + this.getTarefa().toString());
+                "\nTarefas = " + this.getTarefa());
     }
 }

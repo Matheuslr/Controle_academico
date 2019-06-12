@@ -25,16 +25,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class NovaDisciplina extends AppCompatActivity {
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
+    private DatabaseReference mDatabase;
+
     private TimePickerDialog dialogTimePicker;
 
     private Intent it;
     private Bundle extra;
+    private String user;
 
     private EditText etNomeDisciplina;
     private EditText etLimiteDeFaltas;
@@ -122,6 +127,8 @@ public class NovaDisciplina extends AppCompatActivity {
         tarefas = new ArrayList<Tarefa>();
         it = getIntent();
         extra=it.getExtras();
+        user = extra.getString("user");
+        Log.e("NovaDisciplina", user);
 
     }
 
@@ -217,45 +224,17 @@ public class NovaDisciplina extends AppCompatActivity {
             }
             disciplinaAdd.setDiaSemana(diaSemana);
             aluno = extra.getString("user");
-            Log.d("novaDisciplina", disciplinaAdd.toString());
 
-            final DatabaseReference Alunos_aluno_disciplinaNomeRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/nomeDisciplina");
-            final DatabaseReference Alunos_aluno_disciplinas_andamentoRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/andamento");
-            final DatabaseReference Alunos_aluno_disciplinas_diasAulaRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/diasAula");
-            final DatabaseReference Alunos_aluno_disciplinas_emailProfessorRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/emailProfessor");
-            final DatabaseReference Alunos_aluno_disciplinas_horarioAulaRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/horarioAula");
-            final DatabaseReference Alunos_aluno_disciplinas_limiteFaltaRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/limiteFalta");
-            final DatabaseReference Alunos_aluno_disciplinas_metaRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/meta");
-            final DatabaseReference Alunos_aluno_disciplinas_notaAtualRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/notaAtual");
-            final DatabaseReference Alunos_aluno_disciplinas_numeroFaltaAtualRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/numeroFaltaAtual");
-            final DatabaseReference Alunos_aluno_disciplinas_professorRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/professor");
-            final DatabaseReference Alunos_aluno_disciplinas_semestreRef = database.getReference("Alunos/" +  aluno + "/" + nomeDisciplina + "/semestre");
+            escreverNovaDisciplina(disciplinaAdd, aluno);
 
-            Alunos_aluno_disciplinaNomeRef.setValue(nomeDisciplina);
-            Alunos_aluno_disciplinas_andamentoRef.setValue(andamento);
-            Alunos_aluno_disciplinas_diasAulaRef.setValue(diaSemana);
-            Alunos_aluno_disciplinas_emailProfessorRef.setValue(emailProfessor);
-            Alunos_aluno_disciplinas_horarioAulaRef.setValue(horarioAula);
-            Alunos_aluno_disciplinas_limiteFaltaRef.setValue(limiteFaltas);
-            Alunos_aluno_disciplinas_metaRef.setValue(meta);
-            Alunos_aluno_disciplinas_notaAtualRef.setValue(notaAtual);
-            Alunos_aluno_disciplinas_numeroFaltaAtualRef.setValue(numeroFaltasAtual);
-            Alunos_aluno_disciplinas_professorRef.setValue(professor);
-            Alunos_aluno_disciplinas_semestreRef.setValue(semestre);
+
             Toast.makeText(this, "Disciplina adicionada com sucesso! ", Toast.LENGTH_LONG).show();
 
-            etNomeDisciplina.setText("");
-            spinnerSemestre.setTag(1);
-            spinnerDiaSemana.setTag(1);
-            etLimiteDeFaltas.setText("");
-            etNumeroFaltasAtual.setText("");
-            etMeta.setText("");
-            etNotaAtual.setText("");
-            etHorarioAula.setText("");
-            etProfessor.setText("");
-            etEmailProfessor.setText("");
-            swAndamento.setChecked(false);
-            etNomeDisciplina.requestFocus();
+            user = aluno;
+            Intent it = new Intent(NovaDisciplina.this, ListarDisciplina.class);
+            it.putExtra("user", user);
+            startActivity(it);
+
         }
 
     }
@@ -265,10 +244,29 @@ public class NovaDisciplina extends AppCompatActivity {
         return super.onSupportNavigateUp();
 
     }
+    @Override
+    public void onBackPressed(){
+        it = getIntent();
+        extra = it.getExtras();
+        user = extra.getString("user");
+        Intent intent = new Intent();
+        intent.putExtra("user", user);
+        Intent it = new Intent(NovaDisciplina.this, ListarDisciplina.class);
+        startActivity(it);
+        super.onBackPressed();
+    }
 
     public void showTimePicker(View view) {
         dialogTimePicker.show();
     }
+
+    private void escreverNovaDisciplina(Disciplina disciplina, String aluno) {
+        Log.e( "Nova Disciplina",disciplina.toString());
+        DatabaseReference raiz = FirebaseDatabase.getInstance().getReference();
+        raiz.child("Alunos/" + aluno + "/" + disciplina.getNomeDisciplina()).setValue(disciplina);
+
+    }
+
 }
 
 

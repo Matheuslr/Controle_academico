@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvDisciplina"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Disciplina"
+            android:layout_weight="3"
+            />"
+        <TextView
+            android:id="@+id/tvNota"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Nota"
+            android:layout_weight="2"/>
+        <TextView
+            android:id="@+id/tvFalta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Faltas"
+            android:layout_weight="2"/>
+        <TextView
+            android:id="@+id/tvAprovado"
+            android:layout_width="13dp"
+            android:layout_height="wrap_content"
+            android:text="Aprovado"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/lvListarDisciplina"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+
+            <ImageButton
+                android:src="@mipmap/ic_add_round"
+                android:background="#FFFFFFFF"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="adicionarDisciplina"/>
+
+        </FrameLayout>
+
+</LinearLayout>
