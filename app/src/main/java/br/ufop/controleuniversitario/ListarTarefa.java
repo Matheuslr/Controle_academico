@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -47,7 +48,7 @@ public class ListarTarefa extends AppCompatActivity {
         it = getIntent();
         extra = it.getExtras();
         user = extra.getString("user");
-        Log.e("ListarDisciplina", user);
+        Log.e("ListarTarefa", user);
 
 
         DatabaseReference raiz = FirebaseDatabase.getInstance().getReference();
@@ -84,6 +85,19 @@ public class ListarTarefa extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+        lvListarTarefa = findViewById(R.id.lvListarTarefa);
+        lvListarTarefa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                it = getIntent();
+                extra = it.getExtras();
+                user = extra.getString("user");
+                Intent it = new Intent(ListarTarefa.this, EditarTarefa.class);
+                it.putExtra("user", user+"/tarefas/"+arrayTarefa.get(position).getNomeTarefa());
+                finish();
+                startActivity(it);
             }
         });
 

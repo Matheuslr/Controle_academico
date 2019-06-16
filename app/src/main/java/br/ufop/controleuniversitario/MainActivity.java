@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public void adicionarDisciplina(View view) {
 
 
-        Intent it = new Intent(MainActivity.this, NovaDisciplina.class);
+        Intent it = new Intent(MainActivity.this, AdicionarDisciplina.class);
         it.putExtra("user", user);
         startActivity(it);
 

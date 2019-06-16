@@ -1,13 +1,10 @@
 package br.ufop.controleuniversitario;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -23,13 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TimeZone;
 
-public class NovaDisciplina extends AppCompatActivity {
+public class AdicionarDisciplina extends AppCompatActivity {
 
     private TimePickerDialog dialogTimePicker;
     private TimePickerDialog dialogTimePicker2;
@@ -89,7 +83,7 @@ public class NovaDisciplina extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.nova_disciplina);
+        setContentView(R.layout.adicionar_disciplina);
         setTitle("Adicionar Disciplina");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -153,7 +147,7 @@ public class NovaDisciplina extends AppCompatActivity {
         it = getIntent();
         extra=it.getExtras();
         user = extra.getString("user");
-        Log.e("NovaDisciplina", user);
+        Log.e("AdicionarDisciplina", user);
 
     }
 
@@ -268,7 +262,7 @@ public class NovaDisciplina extends AppCompatActivity {
             Toast.makeText(this, "Disciplina adicionada com sucesso! ", Toast.LENGTH_LONG).show();
 
             user = aluno;
-            Intent it = new Intent(NovaDisciplina.this, ListarDisciplina.class);
+            Intent it = new Intent(AdicionarDisciplina.this, ListarDisciplina.class);
             it.putExtra("user", user);
             startActivity(it);
             finish();
@@ -287,7 +281,7 @@ public class NovaDisciplina extends AppCompatActivity {
         it = getIntent();
         extra = it.getExtras();
         user = extra.getString("user");
-        Intent it = new Intent(NovaDisciplina.this, ListarDisciplina.class);
+        Intent it = new Intent(AdicionarDisciplina.this, ListarDisciplina.class);
         it.putExtra("user", user);
         startActivity(it);
         finish();

@@ -1,26 +1,18 @@
 package br.ufop.controleuniversitario;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -132,7 +124,7 @@ public class ListarDisciplina extends AppCompatActivity {
     }
 
     public void adicionarDisciplina(View view) {
-        Intent it = new Intent(ListarDisciplina.this, NovaDisciplina.class);
+        Intent it = new Intent(ListarDisciplina.this, AdicionarDisciplina.class);
         it.putExtra("user", user);
         finish();
         startActivity(it);

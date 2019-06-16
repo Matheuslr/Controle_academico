@@ -286,7 +286,7 @@ public class EditarDisciplina extends AppCompatActivity {
                     swAndamento.setChecked(false);
                 }
                 etNomeDisciplina.requestFocus();
-                Log.e("NovaDisciplina", user);
+                Log.e("AdicionarDisciplina", user);
 
             }
 

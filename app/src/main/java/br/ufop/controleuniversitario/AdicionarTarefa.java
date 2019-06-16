@@ -162,6 +162,14 @@ public class AdicionarTarefa extends AppCompatActivity {
          validacaoDataEntrega = Util.isEmpty(etDataEntrega);
          validacaoHoraEntrega = Util.isEmpty(etHoraEntrega);
 
+         Log.e("validacao",""+validacaoDescricao +
+        validacaoNomeTarefa +
+        validacaoValor +
+        validacaoNotaAlcancada +
+        validacaoMeta +
+        validacaoDataEntrega +
+        validacaoHoraEntrega );
+
         if (validacaoNomeTarefa) {
             Toast.makeText(this, "O nome da tarefa deve ser preenchida", Toast.LENGTH_LONG).show();
             etNomeTarefa.setText("");
@@ -180,34 +188,42 @@ public class AdicionarTarefa extends AppCompatActivity {
              dataEntrega = etDataEntrega.getText().toString();
              tarefa = new Tarefa(descricao,dataEntrega,valor);
 
-        if(!validacaoNomeTarefa){
-            nomeTarefa = etNomeTarefa.getText().toString();
-            tarefa.setNomeTarefa(nomeTarefa);
-        } else {
-            tarefa.setNota(null);
-        }
-         if(!validacaoNotaAlcancada){
-             notaAlcancada = Double.parseDouble(etNotaAlcancada.getText().toString());
-             tarefa.setNota(notaAlcancada);
-         } else {
-             tarefa.setNota(null);
-         }
+            if(!validacaoNomeTarefa){
+                nomeTarefa = etNomeTarefa.getText().toString();
+                tarefa.setNomeTarefa(nomeTarefa);
+            } else {
+                tarefa.setNota(null);
+            }
+             if(!validacaoNotaAlcancada){
+                 notaAlcancada = Double.parseDouble(etNotaAlcancada.getText().toString());
+                 tarefa.setNota(notaAlcancada);
+             } else {
+                 tarefa.setNota(null);
+             }
 
-         if(!validacaoMeta){
-             meta = Double.parseDouble(etMeta.getText().toString());
-             tarefa.setMetaNota(meta);
-         } else {
-             tarefa.setMetaNota(null);
-         }
+             if(!validacaoMeta){
+                 meta = Double.parseDouble(etMeta.getText().toString());
+                 tarefa.setMetaNota(meta);
+             } else {
+                 tarefa.setMetaNota(null);
+             }
 
-         if(!validacaoHoraEntrega){
-             horaEntrega = etHoraEntrega.getText().toString();
-             tarefa.setHoraEntrega(horaEntrega);
-         } else {
-             tarefa.setHoraEntrega(null);
-         }
+             if(!validacaoHoraEntrega){
+                 horaEntrega = etHoraEntrega.getText().toString();
+                 tarefa.setHoraEntrega(horaEntrega);
+             } else {
+                 tarefa.setHoraEntrega(null);
+             }
+            escreverNovaTarefa(tarefa, user);
+            it = getIntent();
+            extra = it.getExtras();
+            Intent it = new Intent(AdicionarTarefa.this, ListarTarefa.class);
+            it.putExtra("user", user);
+            finish();
+            startActivity(it);
+
         }
-        escreverNovaTarefa(tarefa, user);
+
 
     }
 

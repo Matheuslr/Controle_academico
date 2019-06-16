@@ -18,11 +18,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"></activity>
-        <activity android:name=".NovaDisciplina"></activity>
+        <activity android:name=".AdicionarDisciplina"></activity>
         <activity android:name=".ListarDisciplina"></activity>
         <activity android:name=".EditarDisciplina"></activity>
         <activity android:name=".ListarTarefa"></activity>
         <activity android:name=".AdicionarTarefa"></activity>
+        <activity android:name=".EditarTarefa"></activity>
     </application>
 
 </manifest>

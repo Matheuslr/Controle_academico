@@ -46,7 +46,7 @@
 
         <ImageButton
             android:src="@mipmap/ic_add_round"
-            android:background="#FFFFFFFF"
+            android:background="@null"
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="40dp"
             android:layout_marginRight="40dp"
