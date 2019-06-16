@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Disciplina {
     //Atributos
+
     private String nomeDisciplina;
     private String semestre;
     private Integer numeroFaltasAtual;
@@ -19,6 +20,8 @@ public class Disciplina {
 
     private String diaSemana;
     private String horarioAula;
+    private String diaSemana2;
+    private String horarioAula2;
     private String professor;
     private String emailProfessor;
 
@@ -42,7 +45,7 @@ public class Disciplina {
         this.tarefa = tarefa;
     }
 
-    public Disciplina(String nomeDisciplina, String semestre, Integer numeroFaltasAtual, Integer limiteFaltas, Double metaNota, Boolean andamento, Double notaAtual, ArrayList<Tarefa> tarefa, String diaSemana, String horarioAula, String professor, String emailProfessor) {
+    public Disciplina(String nomeDisciplina, String semestre, Integer numeroFaltasAtual, Integer limiteFaltas, Double metaNota, Boolean andamento, Double notaAtual, ArrayList<Tarefa> tarefa, String diaSemana, String horarioAula, String diaSemana2, String horarioAula2, String professor, String emailProfessor) {
         this.nomeDisciplina = nomeDisciplina;
         this.semestre = semestre;
         this.numeroFaltasAtual = numeroFaltasAtual;
@@ -53,6 +56,8 @@ public class Disciplina {
         this.tarefa = tarefa;
         this.diaSemana = diaSemana;
         this.horarioAula = horarioAula;
+        this.diaSemana2 = diaSemana2;
+        this.horarioAula2 = horarioAula2;
         this.professor = professor;
         this.emailProfessor = emailProfessor;
     }
@@ -144,9 +149,26 @@ public class Disciplina {
         return notaAtual;
     }
 
-    public void setNotaAtual(double notaAtual) {
+    public void setNotaAtual(Double notaAtual) {
         this.notaAtual = notaAtual;
     }
+
+    public String getDiaSemana2() {
+        return diaSemana2;
+    }
+
+    public void setDiaSemana2(String diaSemana2) {
+        this.diaSemana2 = diaSemana2;
+    }
+
+    public String getHorarioAula2() {
+        return horarioAula2;
+    }
+
+    public void setHorarioAula2(String horarioAula2) {
+        this.horarioAula2 = horarioAula2;
+    }
+
 
     public String numeroFaltasPossiveis(){
 
@@ -184,7 +206,7 @@ public class Disciplina {
     }
 
     public Boolean aprovado(){
-        return notaAtual > 60 && numeroFaltasAtual > limiteFaltas;
+        return notaAtual >= 60 && numeroFaltasAtual <= limiteFaltas;
     }
 
 
@@ -199,6 +221,8 @@ public class Disciplina {
                 "\nAndamento = " + this.isAndamento() +
                 "\nDias de aula = " + this.getDiaSemana() +
                 "\nHorário de aula = " + this.getHorarioAula() +
+                "\nDias de aula 2 = " + this.getDiaSemana2() +
+                "\nHorário de aula 2 = " + this.getHorarioAula2() +
                 "\nProfessor = " + this.getProfessor() +
                 "\nEmail do Profesor = " + this.getEmailProfessor() +
                 "\nNumero nota atual = " + this.getNotaAtual() +

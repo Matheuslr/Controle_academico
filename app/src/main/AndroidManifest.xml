@@ -20,6 +20,9 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".NovaDisciplina"></activity>
         <activity android:name=".ListarDisciplina"></activity>
+        <activity android:name=".EditarDisciplina"></activity>
+        <activity android:name=".ListarTarefa"></activity>
+        <activity android:name=".AdicionarTarefa"></activity>
     </application>
 
 </manifest>

@@ -4,21 +4,30 @@ public class Tarefa {
     //Atributos
 
     private String descricao;
-    private double valor;
-    private double nota;
     private String dataEntrega;
-    private String tipoAtividade;
-    private double metaNota;
+    private String horaEntrega;
+    private String nomeTarefa;
+    private Double valor;
+    private Double nota;
+    private Double metaNota;
 
     public Tarefa(){
 
     }
-    public Tarefa(String descricao, double valor, double nota,String dataEntrega, String tipoAtividade, double metaNota) {
+
+    public Tarefa(String descricao, String dataEntrega, Double valor) {
         this.descricao = descricao;
+        this.dataEntrega = dataEntrega;
+        this.valor = valor;
+    }
+
+    public Tarefa(String descricao, String dataEntrega, String horaEntrega, String nomeTarefa, Double valor, Double nota, Double metaNota) {
+        this.descricao = descricao;
+        this.dataEntrega = dataEntrega;
+        this.horaEntrega = horaEntrega;
+        this.nomeTarefa = nomeTarefa;
         this.valor = valor;
         this.nota = nota;
-        this.dataEntrega = null;
-        this.tipoAtividade = tipoAtividade;
         this.metaNota = metaNota;
     }
 
@@ -30,19 +39,19 @@ public class Tarefa {
         this.descricao = descricao;
     }
 
-    public double getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 
-    public double getNota() {
+    public Double getNota() {
         return nota;
     }
 
-    public void setNota(double nota) {
+    public void setNota(Double nota) {
         this.nota = nota;
     }
 
@@ -50,33 +59,43 @@ public class Tarefa {
         return dataEntrega;
     }
 
-    public void setDataEntrega( String dataEntrega) {
+    public void setDataEntrega(String dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
 
-    public String getTipoAtividade() {
-        return tipoAtividade;
+    public String getNomeTarefa() {
+        return nomeTarefa;
     }
 
-    public void setTipoAtividade(String tipoAtividade) {
-        this.tipoAtividade = tipoAtividade;
+    public void setNomeTarefa(String nomeTarefa) {
+        this.nomeTarefa = nomeTarefa;
     }
 
-    public double getMetaNota() {
+    public Double getMetaNota() {
         return metaNota;
     }
 
-    public void setMetaNota(double metaNota) {
+    public void setMetaNota(Double metaNota) {
         this.metaNota = metaNota;
+    }
+
+    public String getHoraEntrega() {
+        return horaEntrega;
+    }
+
+    public void setHoraEntrega(String horaEntrega) {
+        this.horaEntrega = horaEntrega;
     }
 
     @Override
     public String toString() {
-        return ("\nDescriçao = " + getDescricao() +
+        return (
+                "\nNome da tarefa = " + getNomeTarefa() +
+                "\nDescriçao = " + getDescricao() +
                 "\nValor = " + getValor() +
                 "\nNota = " + getNota() +
                 "\nData de entrega = " + getDataEntrega() +
-                "\nTipo = " + getTipoAtividade() +
-                "\nPrioridade = " + getMetaNota());
+                "\nPrioridade = " + getMetaNota()) +
+                "\nHora de Entrega = " + getHoraEntrega();
     }
 }

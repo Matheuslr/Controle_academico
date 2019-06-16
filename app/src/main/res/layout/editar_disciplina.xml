@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:focusable="false"
             android:hint="Disciplina"
             />
 
@@ -42,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            
+
             android:layout_gravity="center"
             />
 
@@ -60,7 +61,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:hint="60.00"
-            
+
             android:layout_margin="8dp"
             />
 
@@ -76,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="0"
-            
+
             android:inputType="numberDecimal"
             android:layout_margin="8dp"
             />
@@ -95,7 +96,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:hint="18"
-            
+
             android:layout_margin="8dp"/>
 
         <TextView
@@ -112,9 +113,8 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:hint="0"
-            
-            android:layout_margin="8dp"/>
 
+            android:layout_margin="8dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -204,7 +204,6 @@
             </LinearLayout>
         </LinearLayout>
 
-
         <TextView
             android:id="@+id/textView12"
             android:layout_width="match_parent"
@@ -219,7 +218,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="Joao"
-            
+
             android:layout_margin="8dp"
             />
         <TextView
@@ -236,6 +235,7 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:hint="joao@ufop.edu.com.br"
+
             android:layout_margin="8dp"
             />
 
@@ -246,7 +246,7 @@
             android:layout_marginTop="8dp"
             android:text="A disciplina está em andamento?"
             android:layout_margin="8dp"
-            
+
             />
 
         <Switch
@@ -254,27 +254,65 @@
             android:layout_width="64dp"
             android:layout_height="18dp"
             android:layout_margin="8dp"
-            
+
             android:showText="false"
             android:textOff="false"
             android:textOn="true"
             android:layout_gravity="center"
             tools:checked="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btConfirmarEdicao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="36dp"
+                android:gravity="center"
+                android:onClick="ConfirmarEdicao"
+                android:text="Confirmar"
+                android:layout_weight="1"
+                />
+            <Button
+                android:id="@+id/btDeletarEdicao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="36dp"
+                android:gravity = "center"
+                android:onClick="DeletarEdicao"
+                android:text="Deletar"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
 
-        <Button
 
-            android:id="@+id/btCadastrarDisciplina"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="36dp"
-            
-            android:layout_gravity="center"
-            android:onClick="cadastrarDisciplina"
-            android:text="Cadastrar disciplina" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/btListarTarefas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="36dp"
+                android:gravity = "center"
+                android:onClick="listarTarefas"
+                android:text="Listar Tarefas"
+                android:layout_weight="1" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

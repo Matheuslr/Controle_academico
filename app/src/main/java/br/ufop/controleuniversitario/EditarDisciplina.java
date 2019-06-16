@@ -1,13 +1,11 @@
 package br.ufop.controleuniversitario;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,22 +15,28 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TimeZone;
 
-public class NovaDisciplina extends AppCompatActivity {
+public class EditarDisciplina extends AppCompatActivity {
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    private DatabaseReference mDatabase;
 
     private TimePickerDialog dialogTimePicker;
     private TimePickerDialog dialogTimePicker2;
+
+    private Disciplina disciplina;
 
     private Intent it;
     private Bundle extra;
@@ -89,8 +93,8 @@ public class NovaDisciplina extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.nova_disciplina);
-        setTitle("Adicionar Disciplina");
+        setContentView(R.layout.editar_disciplina);
+        setTitle("Editar disciplina");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         spinnerSemestre =  findViewById(R.id.spinnerSemestre);
@@ -117,10 +121,9 @@ public class NovaDisciplina extends AppCompatActivity {
         etHorarioAula2 = findViewById(R.id.etHorarioAula2);
         calendar = new GregorianCalendar();
         calendar.setTimeZone(TimeZone.getDefault());
-        dateFormatTime = DateFormat.getDateTimeInstance();
-//        etHorarioAula.setText(dateFormatTime.format(calendar.getTime()));
+//        dateFormatTime = DateFormat.getDateTimeInstance();
         dialogTimePicker = new TimePickerDialog(this,
-            AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
+                AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
@@ -133,7 +136,7 @@ public class NovaDisciplina extends AppCompatActivity {
                 true);
         calendar2 = new GregorianCalendar();
         calendar2.setTimeZone(TimeZone.getDefault());
-        dateFormatTime2 = DateFormat.getDateTimeInstance();
+//        dateFormatTime2 = DateFormat.getDateTimeInstance();
         dialogTimePicker2 = new TimePickerDialog(this,
                 AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -153,13 +156,184 @@ public class NovaDisciplina extends AppCompatActivity {
         it = getIntent();
         extra=it.getExtras();
         user = extra.getString("user");
-        Log.e("NovaDisciplina", user);
+
+        DatabaseReference raiz = FirebaseDatabase.getInstance().getReference();
+        disciplina = new Disciplina();
+        raiz.child("Alunos/" + user).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                disciplina = dataSnapshot.getValue(Disciplina.class);
+                Log.e("aluno", user);
+//
+                validacaoNome = (Util.isEmpty(etNomeDisciplina));
+                validacaoLimiteDeFaltas = (Util.isEmpty(etLimiteDeFaltas));
+                validacaoMeta = (Util.isEmpty(etMeta));
+                validacaoNotaAtual = (Util.isEmpty(etNotaAtual));
+                validacaoHorarioAula = (Util.isEmpty(etHorarioAula));
+                validacaoHorarioAula2 = (Util.isEmpty(etHorarioAula2));
+                validacaoProfessor = (Util.isEmpty(etProfessor));
+                validacaoEmailProfessor = (Util.isEmpty(etEmailProfessor));
+                validacaoNumeroFaltasAtual = (Util.isEmpty(etNumeroFaltasAtual));
+                if (validacaoNome)
+                    etNomeDisciplina.setText(disciplina.getNomeDisciplina());
+                else
+                    etNomeDisciplina.setText("");
+
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                        R.array.array_semestre, android.R.layout.simple_spinner_item);
+                try {
+                    Integer spinnerSemestrePosition = adapter.getPosition(disciplina.getSemestre());
+                    spinnerSemestre.setSelection(spinnerSemestrePosition);
+                } catch (java.lang.NullPointerException e){
+                    spinnerSemestre.setSelection(1);
+                }
+
+                ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getApplicationContext(),
+                        R.array.array_dias_semana, android.R.layout.simple_spinner_item);
+                try {
+                Integer spinnerDiaSemanaPosition = adapter2.getPosition(disciplina.getDiaSemana());
+                spinnerDiaSemana.setSelection(spinnerDiaSemanaPosition);
+                } catch (java.lang.NullPointerException e){
+                    spinnerDiaSemana.setSelection(1);
+                }
+                ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getApplicationContext(),
+                        R.array.array_dias_semana, android.R.layout.simple_spinner_item);
+
+                try {
+                Integer spinnerDiaSemanaPosition2 = adapter3.getPosition(disciplina.getDiaSemana2());
+                spinnerDiaSemana2.setSelection(spinnerDiaSemanaPosition2);
+                } catch (java.lang.NullPointerException e){
+                    spinnerDiaSemana2.setSelection(1);
+                }
+
+
+                if(validacaoLimiteDeFaltas) {
+                    try{
+                    etLimiteDeFaltas.setText(String.valueOf(disciplina.getLimiteFaltas()));
+                    } catch (java.lang.NullPointerException e){
+                        etLimiteDeFaltas.setText("");
+                    }
+                } else {
+                    etLimiteDeFaltas.setText("");
+                }
+                if(validacaoNumeroFaltasAtual) {
+                    try{
+                    etNumeroFaltasAtual.setText(String.valueOf(disciplina.getNumeroFaltasAtual()));
+                    } catch (java.lang.NullPointerException e){
+                        etNumeroFaltasAtual.setText("");
+                    }
+                } else
+                    etNumeroFaltasAtual.setText("");
+                if(validacaoMeta){
+                    try {
+                        etMeta.setText(String.valueOf(disciplina.getMetaNota()));
+                    } catch (java.lang.NullPointerException e){
+                        etMeta.setText("");
+                    }
+                }
+                else
+                    etMeta.setText("");
+                if(validacaoNotaAtual) {
+                    try {
+                        etNotaAtual.setText(String.valueOf(disciplina.getNotaAtual()));
+                    } catch (java.lang.NullPointerException e) {
+                        etNotaAtual.setText("");
+                    }
+                }
+                else
+                    etNotaAtual.setText("");
+                if(validacaoHorarioAula) {
+                    try {
+                        etHorarioAula.setText(disciplina.getHorarioAula());
+                    } catch (java.lang.NullPointerException e) {
+                        etHorarioAula.setText("");
+                    }
+                }
+                else
+                    etHorarioAula.setText("");
+                if(validacaoHorarioAula2) {
+                    try {
+
+                        etHorarioAula2.setText(disciplina.getHorarioAula2());
+                    } catch (java.lang.NullPointerException e) {
+                        etHorarioAula2.setText("");
+                    }
+                }
+                else
+                    etHorarioAula2.setText("");
+                if(validacaoProfessor) {
+                    try {
+                        etProfessor.setText(disciplina.getProfessor());
+                    } catch (java.lang.NullPointerException e) {
+                        etProfessor.setText("");
+                    }
+                }
+                else
+                    etProfessor.setText("");
+                if(validacaoEmailProfessor) {
+                    try {
+                        etEmailProfessor.setText(disciplina.getEmailProfessor());
+                    } catch (java.lang.NullPointerException e) {
+                        etEmailProfessor.setText("");
+                    }
+                }
+
+                else
+                    etEmailProfessor.setText("");
+                try {
+                    swAndamento.setChecked(disciplina.isAndamento());
+                } catch (java.lang.NullPointerException e){
+                    swAndamento.setChecked(false);
+                }
+                etNomeDisciplina.requestFocus();
+                Log.e("NovaDisciplina", user);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Error","Eita, deu erro ai fião");
+            }
+        });
 
     }
 
-    public void cadastrarDisciplina(View view) {
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return super.onSupportNavigateUp();
 
+    }
+    @Override
+    public void onBackPressed(){
+        it = getIntent();
+        extra = it.getExtras();
+        String user_nomeDisciplina = extra.getString("user");
+        String [] parts = user_nomeDisciplina.split("/");
+        user = parts[0];
+        Intent it = new Intent(EditarDisciplina.this, ListarDisciplina.class);
+        it.putExtra("user", user);
+        finish();
+        startActivity(it);
+        super.onBackPressed();
+    }
 
+    public void showTimePicker(View view) {
+        dialogTimePicker.show();
+    }
+
+    public void showTimePicker2(View view) {
+        dialogTimePicker2.show();
+    }
+
+    private void escreverNovaDisciplina(Disciplina disciplina, String aluno) {
+        Log.e( "Nova Disciplina",disciplina.toString());
+        DatabaseReference raiz = FirebaseDatabase.getInstance().getReference();
+        raiz.child("Alunos/" + aluno + "/" + disciplina.getNomeDisciplina()).setValue(disciplina);
+
+    }
+
+    public void ConfirmarEdicao(View view) {
         validacaoNome = (Util.isEmpty(etNomeDisciplina));
         validacaoLimiteDeFaltas = (Util.isEmpty(etLimiteDeFaltas));
         validacaoMeta = (Util.isEmpty(etMeta));
@@ -262,51 +436,49 @@ public class NovaDisciplina extends AppCompatActivity {
             disciplinaAdd.setDiaSemana(diaSemana);
             disciplinaAdd.setDiaSemana2(diaSemana2);
             aluno = extra.getString("user");
+            String user_nomeDisciplina = extra.getString("user");
+            String [] parts = user_nomeDisciplina.split("/");
+            aluno = parts[0];
+
             escreverNovaDisciplina(disciplinaAdd, aluno);
 
 
             Toast.makeText(this, "Disciplina adicionada com sucesso! ", Toast.LENGTH_LONG).show();
 
             user = aluno;
-            Intent it = new Intent(NovaDisciplina.this, ListarDisciplina.class);
+            Intent it = new Intent(EditarDisciplina.this, ListarDisciplina.class);
             it.putExtra("user", user);
-            startActivity(it);
             finish();
+            startActivity(it);
 
         }
-
     }
-    @Override
-    public boolean onSupportNavigateUp(){
-        onBackPressed();
-        return super.onSupportNavigateUp();
 
-    }
-    @Override
-    public void onBackPressed(){
+    public void DeletarEdicao(View view) {
         it = getIntent();
-        extra = it.getExtras();
+        extra=it.getExtras();
         user = extra.getString("user");
-        Intent it = new Intent(NovaDisciplina.this, ListarDisciplina.class);
+        DatabaseReference raiz = FirebaseDatabase.getInstance().getReference();
+        raiz.child("Alunos/" + user).setValue(null);
+        finish();
+        String user_nomeDisciplina = extra.getString("user");
+        String [] parts = user_nomeDisciplina.split("/");
+        user = parts[0];
+        Intent it = new Intent(EditarDisciplina.this, ListarDisciplina.class);
+        it.putExtra("user", user);
+        try { Thread.sleep (3000); } catch (InterruptedException ex) {}
+
+        startActivity(it);
+
+    }
+
+    public void listarTarefas(View view) {
+        it = getIntent();
+        extra=it.getExtras();
+        user = extra.getString("user");
+        finish();
+        Intent it = new Intent(EditarDisciplina.this, ListarTarefa.class);
         it.putExtra("user", user);
         startActivity(it);
-        finish();
     }
-
-    public void showTimePicker(View view) {
-        dialogTimePicker.show();
-    }
-    public void showTimePicker2(View view) {
-        dialogTimePicker2.show();
-    }
-
-    private void escreverNovaDisciplina(Disciplina disciplina, String aluno) {
-        Log.e( "Nova Disciplina",disciplina.toString());
-        DatabaseReference raiz = FirebaseDatabase.getInstance().getReference();
-        raiz.child("Alunos/" + aluno + "/" + disciplina.getNomeDisciplina()).setValue(disciplina);
-    }
-
 }
-
-
-

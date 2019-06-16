@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 public class ListarDisciplina extends AppCompatActivity {
 
     private AdapterDisciplina adapter;
+    private ListView lvListarDisciplina;
 
     //Intent vars
     private Intent it;
@@ -60,6 +62,7 @@ public class ListarDisciplina extends AppCompatActivity {
         DatabaseReference raiz = FirebaseDatabase.getInstance().getReference();
         disciplina = new Disciplina();
         raiz.child("Alunos/" + user).addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -67,11 +70,12 @@ public class ListarDisciplina extends AppCompatActivity {
 
                     disciplina = snapshot.getValue(Disciplina.class);
                     arrayDisciplina.add(disciplina);
+                    Log.e("Disciplina", disciplina.toString());
                 }
 
 
                 adapter = new AdapterDisciplina(getApplicationContext(), arrayAdapterDisciplina);
-                ListView lvListarDisciplina = findViewById(R.id.lvListarDisciplina);
+                lvListarDisciplina = findViewById(R.id.lvListarDisciplina);
                 lvListarDisciplina.setAdapter(null);
                 lvListarDisciplina.setAdapter(adapter);
                 disciplina = new Disciplina();
@@ -94,6 +98,19 @@ public class ListarDisciplina extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Erro", Toast.LENGTH_LONG).show();
             }
         });
+        lvListarDisciplina = findViewById(R.id.lvListarDisciplina);
+        lvListarDisciplina.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                it = getIntent();
+                extra = it.getExtras();
+                user = extra.getString("user");
+                Intent it = new Intent(ListarDisciplina.this, EditarDisciplina.class);
+                it.putExtra("user", user+"/"+arrayDisciplina.get(position).getNomeDisciplina());
+                finish();
+                startActivity(it);
+            }
+        });
 
     }
 
@@ -110,12 +127,11 @@ public class ListarDisciplina extends AppCompatActivity {
         user = extra.getString("user");
         Intent intent = new Intent();
         intent.putExtra("user", user);
+        finish();
         super.onBackPressed();
     }
 
     public void adicionarDisciplina(View view) {
-        arrayDisciplina.clear();
-        adapter.clear();
         Intent it = new Intent(ListarDisciplina.this, NovaDisciplina.class);
         it.putExtra("user", user);
         finish();
