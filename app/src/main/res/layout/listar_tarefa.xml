@@ -53,6 +53,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="adicionarTarefa"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="40dp"
+            android:background="@null"
+            android:onClick="irGrafico"
+            android:src="@mipmap/ic_chart_round" />
 
     </FrameLayout>
 

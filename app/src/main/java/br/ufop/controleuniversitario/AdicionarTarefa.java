@@ -1,8 +1,11 @@
 package br.ufop.controleuniversitario;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
@@ -215,6 +221,8 @@ public class AdicionarTarefa extends AppCompatActivity {
                  tarefa.setHoraEntrega(null);
              }
             escreverNovaTarefa(tarefa, user);
+
+
             it = getIntent();
             extra = it.getExtras();
             Intent it = new Intent(AdicionarTarefa.this, ListarTarefa.class);
@@ -233,6 +241,22 @@ public class AdicionarTarefa extends AppCompatActivity {
         DatabaseReference raiz = FirebaseDatabase.getInstance().getReference();
         Log.e("Path", "Alunos/" + user + "/" + tarefa.getNomeTarefa());
         raiz.child("Alunos/" + user + "/tarefas/" + tarefa.getNomeTarefa()).setValue(tarefa);
+
+        try {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+            Intent notificationIntent = new Intent(this, AlarmReceiver.class);
+            notificationIntent.putExtra("tarefa", tarefa.getNomeTarefa());
+            PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Date alarmeAtividade = new SimpleDateFormat("dd/MM/yyyy").parse(tarefa.getDataEntrega());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(alarmeAtividade);
+//            cal.add(Calendar.DATE, -1);
+            Log.e("data", String.valueOf(cal));
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
     @Override

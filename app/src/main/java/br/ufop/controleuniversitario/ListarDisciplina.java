@@ -2,6 +2,7 @@ package br.ufop.controleuniversitario;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +31,9 @@ public class ListarDisciplina extends AppCompatActivity {
     private static boolean alreadyRecreated = false;
     //Disciplina
     private ArrayList<Disciplina> arrayDisciplina = new ArrayList<Disciplina>();
+    private ArrayList<Tarefa> arrayTarefa = new ArrayList<Tarefa>();
     private Disciplina disciplina;
+    private Tarefa tarefa;
     ArrayList<Disciplina> arrayAdapterDisciplina = new ArrayList<>();
     @Override
     public void onCreate(Bundle bundle){
@@ -53,19 +56,23 @@ public class ListarDisciplina extends AppCompatActivity {
 
         DatabaseReference raiz = FirebaseDatabase.getInstance().getReference();
         disciplina = new Disciplina();
+        tarefa = new Tarefa();
         raiz.child("Alunos/" + user).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                Log.e("number child", ""+dataSnapshot.getChildrenCount());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                     disciplina = snapshot.getValue(Disciplina.class);
                     arrayDisciplina.add(disciplina);
-                    Log.e("Disciplina", disciplina.toString());
+
+
                 }
 
 
+//                Log.e("Disciplina", disciplina.toString());
                 adapter = new AdapterDisciplina(getApplicationContext(), arrayAdapterDisciplina);
                 lvListarDisciplina = findViewById(R.id.lvListarDisciplina);
                 lvListarDisciplina.setAdapter(null);
@@ -83,6 +90,9 @@ public class ListarDisciplina extends AppCompatActivity {
                         adapter.add(disciplina);
                     }
                 }
+//                for( int i = 0; i <= arrayDisciplina.size(); i++ ){
+//                    Log.e(arrayDisciplina.get(i).getNomeDisciplina(), arrayTarefa.get(i).toString());
+//                }
             }
 
             @Override
@@ -90,6 +100,8 @@ public class ListarDisciplina extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Erro", Toast.LENGTH_LONG).show();
             }
         });
+
+
         lvListarDisciplina = findViewById(R.id.lvListarDisciplina);
         lvListarDisciplina.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,6 +115,8 @@ public class ListarDisciplina extends AppCompatActivity {
                 startActivity(it);
             }
         });
+
+
 
     }
 
@@ -125,6 +139,14 @@ public class ListarDisciplina extends AppCompatActivity {
 
     public void adicionarDisciplina(View view) {
         Intent it = new Intent(ListarDisciplina.this, AdicionarDisciplina.class);
+        it.putExtra("user", user);
+        finish();
+        startActivity(it);
+
+    }
+
+    public void irGrafico(View view) {
+        Intent it = new Intent(ListarDisciplina.this, GraficoDisciplina.class);
         it.putExtra("user", user);
         finish();
         startActivity(it);

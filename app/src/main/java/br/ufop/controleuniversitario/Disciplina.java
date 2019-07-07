@@ -210,7 +210,6 @@ public class Disciplina {
     }
 
 
-
     @Override
     public String toString() {
         return ("\nnome = "  + this.getNomeDisciplina() +
@@ -227,5 +226,9 @@ public class Disciplina {
                 "\nEmail do Profesor = " + this.getEmailProfessor() +
                 "\nNumero nota atual = " + this.getNotaAtual() +
                 "\nTarefas = " + this.getTarefa());
+    }
+
+    public void addTarefa(Tarefa novaTarefa){
+        this.tarefa.add(novaTarefa);
     }
 }

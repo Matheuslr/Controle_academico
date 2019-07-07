@@ -24,6 +24,13 @@
         <activity android:name=".ListarTarefa"></activity>
         <activity android:name=".AdicionarTarefa"></activity>
         <activity android:name=".EditarTarefa"></activity>
+        <activity android:name=".GraficoDisciplina"></activity>
+        <activity android:name=".GraficoTarefa"></activity>
+        <receiver android:name=".AlarmReceiver">
+            <intent-filter>
+                <action android:name="me.action.DISPLAY_NOTIFICATION"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

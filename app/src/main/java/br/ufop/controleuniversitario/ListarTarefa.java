@@ -16,7 +16,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 public class ListarTarefa extends AppCompatActivity {
     private DatePickerDialog dialogDatePicker;
@@ -62,6 +67,26 @@ public class ListarTarefa extends AppCompatActivity {
                     arrayTarefa.add(tarefa);
                     Log.e("Tarefa", tarefa.toString());
                 }
+                Collections.sort(arrayTarefa, new Comparator<Tarefa>() {
+                    public int compare(Tarefa o1, Tarefa o2) {
+                        Date date1, date2;
+                        try {
+                            date1 = new SimpleDateFormat("dd/MM/yyyy").parse(o1.getDataEntrega());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            date1 = null;
+                        }
+                        try {
+                            date2 = new SimpleDateFormat("dd/MM/yyyy").parse(o2.getDataEntrega());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            date2 = null;
+                        }
+                        if (date1 == null || date2 == null)
+                            return 0;
+                        return date1.compareTo(date2);
+                    }
+                });
 
                 adapter = new AdapterTarefa(getApplicationContext(), arrayAdapterTarefa);
                 lvListarTarefa = findViewById(R.id.lvListarTarefa);
@@ -110,6 +135,13 @@ public class ListarTarefa extends AppCompatActivity {
         startActivity(it);
     }
 
+    public void irGrafico(View view) {
+        Intent it = new Intent(ListarTarefa.this, GraficoTarefa.class);
+        it.putExtra("user", user);
+        finish();
+        startActivity(it);
+
+    }
 
     @Override
     public boolean onSupportNavigateUp(){
